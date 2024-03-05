@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install 
-          CI=false
+          --ci=false
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Set PUBLIC_URL
