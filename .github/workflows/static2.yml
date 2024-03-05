@@ -34,7 +34,8 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm install
+        run: npm install 
+          CI=false
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Set PUBLIC_URL
