@@ -33,9 +33,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Set environment variable
+        run: echo "CI=true" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: npm install 
-          --ci=false
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Set PUBLIC_URL
