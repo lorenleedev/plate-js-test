@@ -1,8 +1,17 @@
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import logo from './logo.svg';
+import {Parser} from 'html-to-react';
 import './App.css';
 import { withProps } from '@udecode/cn';
-import {createPlugins, Plate, RenderAfterEditable, PlateLeaf, PlateEditor, useEditorRef} from '@udecode/plate-common';
+import {
+    createPlugins,
+    Plate,
+    RenderAfterEditable,
+    PlateLeaf,
+    PlateEditor,
+    useEditorRef,
+    createPlateEditor, deserializeHtml, TElement
+} from '@udecode/plate-common';
 import { createParagraphPlugin, ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
 import { createHeadingPlugin, ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, ELEMENT_H4, ELEMENT_H5, ELEMENT_H6 } from '@udecode/plate-heading';
 import { createBlockquotePlugin, ELEMENT_BLOCKQUOTE } from '@udecode/plate-block-quote';
@@ -40,8 +49,8 @@ import { createDeserializeDocxPlugin } from '@udecode/plate-serializer-docx';
 import { createDeserializeCsvPlugin } from '@udecode/plate-serializer-csv';
 import { createDeserializeMdPlugin } from '@udecode/plate-serializer-md';
 import { createJuicePlugin } from '@udecode/plate-juice';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+// import { DndProvider } from 'react-dnd';
+// import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { BlockquoteElement } from './components/plate-ui/blockquote-element';
 import { HrElement } from './components/plate-ui/hr-element';
@@ -60,10 +69,10 @@ import { FixedToolbar } from './components/plate-ui/fixed-toolbar';
 // import { FixedToolbarButtons } from './components/plate-ui/fixed-toolbar-buttons';
 import { withPlaceholders } from './components/plate-ui/placeholder';
 import { withDraggables } from './components/plate-ui/with-draggables';
-
+import {serializeHtml, elementToHtml, leafToHtml, createElementWithSlate} from "@udecode/plate-serializer-html";
+import {getTEditor, normalizeInitialValue} from "@udecode/plate";
 const plugins = createPlugins(
     [
-        createParagraphPlugin(),
         createHeadingPlugin(),
         createBlockquotePlugin(),
         createCodeBlockPlugin(),
@@ -76,7 +85,7 @@ const plugins = createPlugins(
         createCaptionPlugin({
             options: {
                 pluginKeys: [
-                    // ELEMENT_IMAGE, ELEMENT_MEDIA_EMBED
+                    ELEMENT_IMAGE, ELEMENT_MEDIA_EMBED
                 ]
             },
         }),
@@ -253,28 +262,84 @@ const initialValue = [
     },
 ];
 
+const editor = createPlateEditor({plugins});
+
+const tmpEditor = createPlateEditor({
+    plugins: createPlugins([
+        /* element and mark plugins */
+    ], {
+        components: {
+            /* components for the same */
+        },
+    }),
+});
+const useConvertPlateToHtml = (editor: any) => {
+    const [html, setHtml] = useState('');
+
+    const convertPlateToHtml = (nodes: any) => {
+        const serializedHtml = serializeHtml(editor, { nodes });
+        console.log('serializedHtml', serializedHtml); // FIXME: 여기서 img가 html로 직렬화안됨
+        setHtml(serializedHtml);
+    }
+
+    return { html, convertPlateToHtml };
+};
+
+const useConvertHtmlToPlate = () => {
+    const [plate, setPlate] = useState<any>([]);
+    const convertHtmlToPlate = (html: HTMLHtmlElement | string) => {
+        const plate = deserializeHtml(tmpEditor, {
+            element: html,
+        }) as TElement[];
+        console.log('plate', normalizeInitialValue(tmpEditor, plate))
+        setPlate(normalizeInitialValue(tmpEditor, plate));
+    }
+    return { plate, convertHtmlToPlate };
+}
+
+function stringToHTML(htmlString: string) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = htmlString.trim();
+    return wrapper.innerHTML;
+}
 
 function App() {
+    const { html, convertPlateToHtml } = useConvertPlateToHtml(tmpEditor);
+    const { plate, convertHtmlToPlate } = useConvertHtmlToPlate();
 
-    const handleClick = useCallback((value: any) => {
-        console.log('changed!', value)
+    const initialValue = useMemo(() => {
+        const tmpEditor = createPlateEditor({ plugins });
+        return deserializeHtml(tmpEditor, { element: '하잉' });
     }, []);
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-          <h1>Plate JS로 구현한 텍스트 에디터</h1>
-      </header>
-        <div className={"editor-wrapper"}>
-            <Plate plugins={plugins} initialValue={initialValue} onChange={(value) => handleClick(value)}>
-                <FixedToolbar>
-                    {/*<FixedToolbarButtons />*/}
-                </FixedToolbar>
-                <Editor className={"custom-class"}/>
-            </Plate>
+    const onChange = (nodes: any) => {
+        convertPlateToHtml(nodes);
+        localStorage.setItem('plate-html', html);
+    }
+
+    useEffect(() => {
+        const html = localStorage.getItem('plate-html');
+        convertHtmlToPlate(html || '');
+    }, []);
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <h1>Plate JS로 구현한 텍스트 에디터</h1>
+            </header>
+            <div className={"editor-wrapper"}>
+                <Plate
+                    plugins={plugins}
+                    onChange={(value) => onChange(value)}
+                >
+                    <FixedToolbar>
+                        {/*<FixedToolbarButtons />*/}
+                    </FixedToolbar>
+                    <Editor className={"custom-class"} />
+                </Plate>
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default App;
