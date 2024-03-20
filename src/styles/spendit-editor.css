@@ -1,0 +1,90 @@
+.Spendit-Editor {
+    border: 1px solid #DCDCDC;
+    border-radius: 10px;
+
+}
+.Spendit-Toolbar {
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #DCDCDC;
+    background: #F8F8F8;
+}
+
+.Spendit-Toolbar-Button-Group-Wrapper {
+    display: flex;
+    padding: 10px 12px;
+}
+
+.Spendit-Toolbar-Group {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    border: 1px solid #DCDCDC;
+    background: white;
+}
+
+.Spendit-Content {
+    min-height: 500px;
+    max-height: 1000px;
+    padding: 8px 12px;
+    overflow-y: scroll;
+}
+.Spendit-Content:focus {
+    outline: none;
+}
+.Spendit-Editor-Footer {
+    border-radius: 0 0 10px 10px;
+    border-top: 1px solid #DCDCDC;
+    background: #F8F8F8;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Spendit-Toolbar-Button {
+
+}
+
+.Spendit-Toolbar-Toogle-Item {
+    display: flex;
+    align-items: center;
+    border: none;
+    background: none;
+    border-radius: 6px;
+}
+.Spendit-Toolbar-Toogle-Item-Pressed {
+    color: red;
+}
+
+.Spendit-Dropdown-Menu-Primitive-SubTrigger {
+    background: red;
+}
+
+.Spendit-Dropdown-Content {
+    max-width: 200px;
+    background: white;
+    border: 1px solid #DCDCDC;
+}
+
+.Spendit-Toolbar-Selected-Label {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.Spendit-Dropdown-Icon-Wrapper {
+    border-left: 1px solid #DCDCDC;
+    margin-left: 4px;
+}
+
+.Spendit-Color-Dropdown-Menu-Item {
+    width: 100%;
+    height: 100%;
+}
+
+.Spendit-Color-Picker button {
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}
