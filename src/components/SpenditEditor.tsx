@@ -261,7 +261,7 @@ export function SpenditEditor() {
     return (
         <>
             <div>
-                <button onClick={handleClick} style={{marginBottom:'10px', backgroundColor: "lightcyan", padding: '5px', border: '1px solid lightgray', borderRadius: '4px'}}>로컬스토리지에 저장</button>
+                <button onClick={handleClick} style={{marginBottom:'10px', backgroundColor: "lightgrey", padding: '5px', border: '1px solid lightgray', borderRadius: '4px'}}>로컬스토리지에 저장</button>
             </div>
             <div>
                 <TooltipProvider>
