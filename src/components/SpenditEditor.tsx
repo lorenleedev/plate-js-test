@@ -1,14 +1,11 @@
 import { withProps } from '@udecode/cn';
-import {createPlugins, Plate, PlateContent, PlateElement, PlateLeaf, ELEMENT_DEFAULT, insertNodes, setNodes, RenderAfterEditable} from '@udecode/plate-common';
-import { createParagraphPlugin, ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
+import { createSelectOnBackspacePlugin } from '@udecode/plate-select';
+import { createNodeIdPlugin } from '@udecode/plate-node-id';
+import { createAutoformatPlugin } from '@udecode/plate-autoformat';
+import { createExitBreakPlugin, createSoftBreakPlugin } from '@udecode/plate-break';
+import {createPlugins, Plate, insertNodes, setNodes, PlateContent, PlateElement, PlateLeaf, ELEMENT_DEFAULT, RenderAfterEditable} from '@udecode/plate-common';
 import { createHeadingPlugin, ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, ELEMENT_H4, ELEMENT_H5, ELEMENT_H6 } from '@udecode/plate-heading';
-import { createFontColorPlugin, createFontBackgroundColorPlugin } from '@udecode/plate-font';
-import { createHighlightPlugin, MARK_HIGHLIGHT } from '@udecode/plate-highlight';
-import { HeadingElement } from './plate-ui/heading-element';
-import { ParagraphElement } from './plate-ui/paragraph-element';
-import { TooltipProvider } from './plate-ui/tooltip';
-import {FixedToolbar} from "./plate-ui/fixed-toolbar";
-import {FixedToolbarButtons} from "./plate-ui/fixed-toolbar-buttons";
+import { createParagraphPlugin, ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
 import {
     createBoldPlugin,
     createItalicPlugin,
@@ -25,34 +22,36 @@ import {
     MARK_SUBSCRIPT,
     MARK_SUPERSCRIPT
 } from "@udecode/plate-basic-marks";
-import {HighlightLeaf} from "./plate-ui/highlight-leaf";
-import {CodeLeaf} from "./plate-ui/code-leaf";
+import { createFontColorPlugin, createFontBackgroundColorPlugin } from '@udecode/plate-font';
+import { createHighlightPlugin, MARK_HIGHLIGHT } from '@udecode/plate-highlight';
 import {createAlignPlugin} from "@udecode/plate-alignment";
 import {createLineHeightPlugin} from "@udecode/plate-line-height";
-import { createListPlugin, ELEMENT_UL, ELEMENT_OL, ELEMENT_LI } from '@udecode/plate-list';
-import {ListElement} from "./plate-ui/list-element";
-import {createIndentListPlugin} from "@udecode/plate-indent-list";
-import {createIndentPlugin} from "@udecode/plate-indent";
 import {ELEMENT_CODE_BLOCK} from "@udecode/plate-code-block";
-import { createAutoformatPlugin } from '@udecode/plate-autoformat';
-import {
-    ELEMENT_HR,
-    createHorizontalRulePlugin,
-} from '@udecode/plate-horizontal-rule';
-import { createSelectOnBackspacePlugin } from '@udecode/plate-select';
-import {HrElement} from "./plate-ui/hr-element";
-import { BlockquoteElement } from './plate-ui/blockquote-element';
+import {createIndentPlugin} from "@udecode/plate-indent";
+import {createIndentListPlugin} from "@udecode/plate-indent-list";
+import { createListPlugin, ELEMENT_UL, ELEMENT_OL, ELEMENT_LI } from '@udecode/plate-list';
+import {createHorizontalRulePlugin, ELEMENT_HR} from '@udecode/plate-horizontal-rule';
 import { createBlockquotePlugin, ELEMENT_BLOCKQUOTE } from '@udecode/plate-block-quote';
 import { createLinkPlugin, ELEMENT_LINK } from '@udecode/plate-link';
 import {createImagePlugin,createMediaEmbedPlugin, ELEMENT_IMAGE, ELEMENT_MEDIA_EMBED} from "@udecode/plate-media";
+import { createTablePlugin, ELEMENT_TABLE, ELEMENT_TR, ELEMENT_TD, ELEMENT_TH } from '@udecode/plate-table';
+import {createCaptionPlugin} from "@udecode/plate-caption";
+
+/* 공통 UI */
+import { TooltipProvider } from './plate-ui/tooltip';
+import {FixedToolbar} from "./plate-ui/fixed-toolbar";
+import {FixedToolbarButtons} from "./plate-ui/fixed-toolbar-buttons";
+import { HeadingElement } from './plate-ui/heading-element';
+import { ParagraphElement } from './plate-ui/paragraph-element';
+import {CodeLeaf} from "./plate-ui/code-leaf";
+import {HighlightLeaf} from "./plate-ui/highlight-leaf";
+import {ListElement} from "./plate-ui/list-element";
+import {HrElement} from "./plate-ui/hr-element";
+import { BlockquoteElement } from './plate-ui/blockquote-element';
 import {LinkElement} from "./plate-ui/link-element";
 import {LinkFloatingToolbar} from "./plate-ui/link-floating-toolbar";
 import { ImageElement } from './plate-ui/image-element';
-import {createCaptionPlugin} from "@udecode/plate-caption";
-import { createNodeIdPlugin } from '@udecode/plate-node-id';
 import { createBlockSelectionPlugin } from '@udecode/plate-selection';
-import { createExitBreakPlugin, createSoftBreakPlugin } from '@udecode/plate-break';
-import { createTablePlugin, ELEMENT_TABLE, ELEMENT_TR, ELEMENT_TD, ELEMENT_TH } from '@udecode/plate-table';
 import { TableElement } from './plate-ui/table-element';
 import { TableRowElement } from './plate-ui/table-row-element';
 import { TableCellElement, TableCellHeaderElement } from './plate-ui/table-cell-element';
@@ -89,7 +88,7 @@ const plugins = createPlugins(
                 },
             },
         }),
-        createListPlugin(), // 아래 플러그인이 필요함
+        createListPlugin(),
         createIndentPlugin({
             inject: {
                 props: {
@@ -178,7 +177,7 @@ const plugins = createPlugins(
                         hotkey: 'enter',
                         query: {
                             allow: [
-                                // ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD
+                                ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD
                             ],
                         },
                     },
@@ -227,23 +226,19 @@ const plugins = createPlugins(
     }
 );
 
-const initialValue = [
-    {
-        id: '1',
-        type: 'p',
-        children: [{ text: 'Hello, World!' }],
-    },
-];
 
 export function SpenditEditor() {
     return (
-        <TooltipProvider >
+        <TooltipProvider>
             <div className={"Spendit-Editor"}>
-                <Plate plugins={plugins} initialValue={initialValue}>
+                <Plate plugins={plugins}>
                     <FixedToolbar>
                         <FixedToolbarButtons/>
                     </FixedToolbar>
-                    <PlateContent className={'Spendit-Content'}/>
+                    <PlateContent
+                        placeholder={'내용을 입력하세요'}
+                        className={'Spendit-Content'}
+                    />
                 </Plate>
                 <div className={'Spendit-Editor-Footer'}/>
             </div>

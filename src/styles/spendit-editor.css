@@ -1,8 +1,34 @@
 .Spendit-Editor {
     border: 1px solid #DCDCDC;
     border-radius: 10px;
-
 }
+
+.Spendit-Content {
+    min-height: 500px !important;
+    max-height: 1000px;
+    padding: 8px 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.Spendit-Content:focus {
+    outline: none;
+}
+
+[data-slate-placeholder] {
+    top: 12px !important; /* Spendit-Content의 padding */
+}
+
+.Spendit-Editor-Footer {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0 0 10px 10px;
+    border-top: 1px solid #DCDCDC;
+    background: #F8F8F8;
+    height: 20px;
+}
+
+/* Toolbar */
 .Spendit-Toolbar {
     border-radius: 10px 10px 0 0;
     border-bottom: 1px solid #DCDCDC;
@@ -11,34 +37,23 @@
 
 .Spendit-Toolbar-Button-Group-Wrapper {
     display: flex;
+    flex-wrap: wrap;
     padding: 10px 12px;
+    gap: 12px;
 }
 
 .Spendit-Toolbar-Group {
     display: flex;
     align-items: center;
-    margin-right: 10px;
     border: 1px solid #DCDCDC;
+    border-radius: 4px;
     background: white;
+    gap: 12px;
+    padding: 0 12px;
 }
 
-.Spendit-Content {
-    min-height: 500px;
-    max-height: 1000px;
-    padding: 8px 12px;
-    overflow-y: scroll;
-}
-.Spendit-Content:focus {
-    outline: none;
-}
-.Spendit-Editor-Footer {
-    border-radius: 0 0 10px 10px;
-    border-top: 1px solid #DCDCDC;
-    background: #F8F8F8;
-    height: 20px;
-    display: flex;
-    justify-content: space-between;
-}
+
+
 
 .Spendit-Toolbar-Button {
 
