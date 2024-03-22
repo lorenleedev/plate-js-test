@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/plate-js-test/static/css/main.2974b9a4.css",
-    "main.js": "/plate-js-test/static/js/main.b16e07c1.js",
+    "main.css": "/plate-js-test/static/css/main.c0b7a3df.css",
+    "main.js": "/plate-js-test/static/js/main.a634cebf.js",
     "index.html": "/plate-js-test/index.html",
-    "main.2974b9a4.css.map": "/plate-js-test/static/css/main.2974b9a4.css.map",
-    "main.b16e07c1.js.map": "/plate-js-test/static/js/main.b16e07c1.js.map"
+    "main.c0b7a3df.css.map": "/plate-js-test/static/css/main.c0b7a3df.css.map",
+    "main.a634cebf.js.map": "/plate-js-test/static/js/main.a634cebf.js.map"
   },
   "entrypoints": [
-    "static/css/main.2974b9a4.css",
-    "static/js/main.b16e07c1.js"
+    "static/css/main.c0b7a3df.css",
+    "static/js/main.a634cebf.js"
   ]
 }
