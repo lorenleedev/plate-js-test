@@ -34,7 +34,7 @@ export function LineHeightDropdownMenu({ ...props }: DropdownMenuProps) {
         </ToolbarButton>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start" className="min-w-0">
+      <DropdownMenuContent align="start" className="min-w-0" style={{boxShadow: '1px 1px 1px red'}}>
         <DropdownMenuRadioGroup
           className="flex flex-col gap-0.5"
           {...radioGroupProps}

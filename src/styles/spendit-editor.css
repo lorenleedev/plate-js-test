@@ -44,6 +44,7 @@
 
 .Spendit-Toolbar-Group {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     border: 1px solid #DCDCDC;
     border-radius: 4px;
@@ -102,4 +103,8 @@
     width: 20px;
     height: 20px;
     padding: 0;
+}
+
+.Spendit-DropdownMenu-RadioItem {
+    padding: 10px 30px 10px 10px;
 }

@@ -42,7 +42,7 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton pressed={openState.open} tooltip="Table" isDropdown>
+        <ToolbarButton pressed={openState.open} tooltip="표" isDropdown>
           <Icons.table />
         </ToolbarButton>
       </DropdownMenuTrigger>
@@ -50,25 +50,26 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
       <DropdownMenuContent
         align="start"
         className="flex w-[180px] min-w-0 flex-col gap-0.5"
+        style={{zIndex: 1000}}
       >
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Icons.table className={iconVariants({ variant: 'menuItem' })} />
-            <span>Table</span>
+            <span>표</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuItem
-              className="min-w-[180px]"
+              className="min-w-[180px] flex"
               onSelect={async () => {
                 insertTable(editor);
                 focusEditor(editor);
               }}
             >
               <Icons.add className={iconVariants({ variant: 'menuItem' })} />
-              Insert table
+              표 추가
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="min-w-[180px]"
+              className="min-w-[180px] flex"
               disabled={!tableSelected}
               onSelect={async () => {
                 deleteTable(editor);
@@ -76,7 +77,7 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
               }}
             >
               <Icons.trash className={iconVariants({ variant: 'menuItem' })} />
-              Delete table
+              표 삭제
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
@@ -84,11 +85,11 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger disabled={!tableSelected}>
             <Icons.column className={iconVariants({ variant: 'menuItem' })} />
-            <span>Column</span>
+            <span>열</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuItem
-              className="min-w-[180px]"
+              className="min-w-[180px] flex"
               disabled={!tableSelected}
               onSelect={async () => {
                 insertTableColumn(editor);
@@ -96,10 +97,10 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
               }}
             >
               <Icons.add className={iconVariants({ variant: 'menuItem' })} />
-              Insert column after
+              오른쪽에 열 추가
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="min-w-[180px]"
+              className="min-w-[180px] flex"
               disabled={!tableSelected}
               onSelect={async () => {
                 deleteColumn(editor);
@@ -107,7 +108,7 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
               }}
             >
               <Icons.minus className={iconVariants({ variant: 'menuItem' })} />
-              Delete column
+              열 삭제
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
@@ -115,11 +116,11 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger disabled={!tableSelected}>
             <Icons.row className={iconVariants({ variant: 'menuItem' })} />
-            <span>Row</span>
+            <span>행</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuItem
-              className="min-w-[180px]"
+              className="min-w-[180px] flex"
               disabled={!tableSelected}
               onSelect={async () => {
                 insertTableRow(editor);
@@ -127,10 +128,10 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
               }}
             >
               <Icons.add className={iconVariants({ variant: 'menuItem' })} />
-              Insert row after
+              아래에 행 추가
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="min-w-[180px]"
+              className="min-w-[180px] flex"
               disabled={!tableSelected}
               onSelect={async () => {
                 deleteRow(editor);
@@ -138,7 +139,7 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
               }}
             >
               <Icons.minus className={iconVariants({ variant: 'menuItem' })} />
-              Delete row
+              행 삭제
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>

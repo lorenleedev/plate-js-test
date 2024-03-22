@@ -63,28 +63,28 @@ export const TableBordersDropdownMenuContent = withRef<
         onCheckedChange={getOnSelectTableBorder('bottom')}
       >
         <Icons.borderBottom className={iconVariants({ size: 'sm' })} />
-        <div>Bottom Border</div>
+        <div>아래 테두리</div>
       </DropdownMenuCheckboxItem>
       <DropdownMenuCheckboxItem
         checked={hasTopBorder}
         onCheckedChange={getOnSelectTableBorder('top')}
       >
         <Icons.borderTop className={iconVariants({ size: 'sm' })} />
-        <div>Top Border</div>
+        <div>위 테두리</div>
       </DropdownMenuCheckboxItem>
       <DropdownMenuCheckboxItem
         checked={hasLeftBorder}
         onCheckedChange={getOnSelectTableBorder('left')}
       >
         <Icons.borderLeft className={iconVariants({ size: 'sm' })} />
-        <div>Left Border</div>
+        <div>왼쪽 테두리</div>
       </DropdownMenuCheckboxItem>
       <DropdownMenuCheckboxItem
         checked={hasRightBorder}
         onCheckedChange={getOnSelectTableBorder('right')}
       >
         <Icons.borderRight className={iconVariants({ size: 'sm' })} />
-        <div>Right Border</div>
+        <div>오른쪽 테두리</div>
       </DropdownMenuCheckboxItem>
 
       <Separator />
@@ -94,14 +94,14 @@ export const TableBordersDropdownMenuContent = withRef<
         onCheckedChange={getOnSelectTableBorder('none')}
       >
         <Icons.borderNone className={iconVariants({ size: 'sm' })} />
-        <div>No Border</div>
+        <div>테두리 없음</div>
       </DropdownMenuCheckboxItem>
       <DropdownMenuCheckboxItem
         checked={hasOuterBorders}
         onCheckedChange={getOnSelectTableBorder('outer')}
       >
         <Icons.borderAll className={iconVariants({ size: 'sm' })} />
-        <div>Outside Borders</div>
+        <div>바깥 테두리</div>
       </DropdownMenuCheckboxItem>
     </DropdownMenuContent>
   );
@@ -134,7 +134,7 @@ export const TableFloatingToolbar = withRef<typeof PopoverContent>(
         onClick={() => mergeTableCells(editor)}
       >
         <Icons.combine className="mr-2 h-4 w-4" />
-        Merge
+        합치기
       </Button>
     );
 
@@ -146,7 +146,7 @@ export const TableFloatingToolbar = withRef<typeof PopoverContent>(
         onClick={() => unmergeTableCells(editor)}
       >
         <Icons.ungroup className="mr-2 h-4 w-4" />
-        Unmerge
+        분리하기
       </Button>
     );
 
@@ -156,7 +156,7 @@ export const TableFloatingToolbar = withRef<typeof PopoverContent>(
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" isMenu>
               <Icons.borderAll className="mr-2 h-4 w-4" />
-              Borders
+              표 테두리
             </Button>
           </DropdownMenuTrigger>
 
@@ -167,7 +167,7 @@ export const TableFloatingToolbar = withRef<typeof PopoverContent>(
 
         <Button contentEditable={false} variant="ghost" isMenu {...buttonProps}>
           <Icons.delete className="mr-2 h-4 w-4" />
-          Delete
+          삭제
         </Button>
       </>
     );

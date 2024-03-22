@@ -23,7 +23,7 @@ export const IndentListToolbarButton = withRef<
     <ToolbarButton
       ref={ref}
       tooltip={
-        nodeType === ListStyleType.Disc ? '들여쓰기' : '내어쓰기'
+        nodeType === ListStyleType.Disc ? '글머리 기호 목록' : '번호목록'
       }
       {...props}
     >

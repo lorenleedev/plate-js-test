@@ -127,11 +127,12 @@ export function FixedToolbarButtons() {
                   <LinkToolbarButton />
               </ToolbarGroup>
               <ToolbarGroup noSeparator>
-                  <TableDropdownMenu />
                   {/*<MediaToolbarButton nodeType={ELEMENT_IMAGE} />*/}
 
-                  <ToolbarButton onClick={async (event) => {
-                      await insertMedia(editor, {getUrl: () => {
+                  <ToolbarButton
+                      tooltip="이미지 추가"
+                      onClick={async (event) => {
+                          await insertMedia(editor, {getUrl: () => {
                               return new Promise((resolve, reject) => {
                                   const input = document.createElement('input');
                                   input.type = 'file';
@@ -155,14 +156,12 @@ export function FixedToolbarButtons() {
                                   };
                               });
                           }, type: ELEMENT_IMAGE});
-                      insertNodes(editor, {
-                          type: ELEMENT_DEFAULT,
-                          children: [{ text: '' }],
-                      });
-                      focusEditor(editor);
-                  }}>
+                          focusEditor(editor);
+                        }}
+                  >
                       <Icons.image />
                   </ToolbarButton>
+                  <TableDropdownMenu />
               </ToolbarGroup>
 
           </>

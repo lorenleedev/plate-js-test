@@ -111,7 +111,6 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
       </button>
 
       <Separator orientation="vertical" />
-
       <LinkOpenButton
         className={buttonVariants({
           variant: 'ghost',

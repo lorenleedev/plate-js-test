@@ -116,7 +116,7 @@ export const DropdownMenuRadioItem = withRef<
     ref={ref}
     className={cn(
       'relative flex select-none items-center rounded-sm pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      'h-9 cursor-pointer px-2 data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground',
+      'h-9 cursor-pointer data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground Spendit-DropdownMenu-RadioItem',
       className
     )}
     {...props}
