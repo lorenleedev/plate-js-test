@@ -148,15 +148,20 @@ export function FixedToolbarButtons() {
                                       }
                                       // 파일 읽기
                                       const reader = new FileReader();
+                                      reader.readAsDataURL(files[0]);
                                       reader.onload = (e) => {
                                           const result = e.target!.result as string;
                                           resolve(result);
                                       };
-                                      reader.readAsDataURL(files[0]);
                                   };
                               });
-                          }, type: ELEMENT_IMAGE});
+                          }, type: ELEMENT_IMAGE, nextBlock: true, select: true});
+                          insertNodes(editor, {
+                              type: ELEMENT_DEFAULT,
+                              children: [{ text: '' }],
+                          }, {select: true, nextBlock: true});
                           focusEditor(editor);
+
                         }}
                   >
                       <Icons.image />
