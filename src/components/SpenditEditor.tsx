@@ -3,7 +3,18 @@ import { createSelectOnBackspacePlugin } from '@udecode/plate-select';
 import { createNodeIdPlugin } from '@udecode/plate-node-id';
 import { createAutoformatPlugin } from '@udecode/plate-autoformat';
 import { createExitBreakPlugin, createSoftBreakPlugin } from '@udecode/plate-break';
-import {createPlugins, Plate, insertNodes, setNodes, PlateContent, PlateElement, PlateLeaf, ELEMENT_DEFAULT, RenderAfterEditable} from '@udecode/plate-common';
+import {
+    createPlugins,
+    Plate,
+    insertNodes,
+    setNodes,
+    PlateContent,
+    PlateElement,
+    PlateLeaf,
+    ELEMENT_DEFAULT,
+    RenderAfterEditable,
+    TElement,
+} from '@udecode/plate-common';
 import { createHeadingPlugin, ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, ELEMENT_H4, ELEMENT_H5, ELEMENT_H6 } from '@udecode/plate-heading';
 import { createParagraphPlugin, ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
 import {
@@ -55,6 +66,7 @@ import { createBlockSelectionPlugin } from '@udecode/plate-selection';
 import { TableElement } from './plate-ui/table-element';
 import { TableRowElement } from './plate-ui/table-row-element';
 import { TableCellElement, TableCellHeaderElement } from './plate-ui/table-cell-element';
+import {useMemo, useState} from "react";
 
 const plugins = createPlugins(
     [
@@ -226,22 +238,61 @@ const plugins = createPlugins(
     }
 );
 
-
 export function SpenditEditor() {
+    const [value, setValue] = useState<TElement[]>([]);
+
+    const initialValue = useMemo(() => {
+        const html = localStorage.getItem('plate-html') || '';
+        if (html) {
+            return JSON.parse(html);
+        } else {
+            return [{
+                type: ELEMENT_DEFAULT,
+                children: [{ text: '' }],
+            }]
+        }
+    }, []) as TElement[];
+
+    const handleClick = () => {
+        const html = JSON.stringify(value);
+        localStorage.setItem('plate-html', html);
+    }
+
     return (
-        <TooltipProvider>
-            <div className={"Spendit-Editor"}>
-                <Plate plugins={plugins}>
-                    <FixedToolbar>
-                        <FixedToolbarButtons/>
-                    </FixedToolbar>
-                    <PlateContent
-                        placeholder={'내용을 입력하세요'}
-                        className={'Spendit-Content'}
-                    />
-                </Plate>
-                <div className={'Spendit-Editor-Footer'}/>
+        <>
+            <div>
+                <button onClick={handleClick} style={{marginBottom:'10px', backgroundColor: "lightcyan", padding: '5px'}}>로컬스토리지에 저장</button>
             </div>
-        </TooltipProvider>
+            <div>
+                <TooltipProvider>
+                    <div className={"Spendit-Editor"}>
+                        <Plate
+                            plugins={plugins}
+                            initialValue={initialValue}
+                            onChange={(newValue) => {
+                                if (newValue.length === 0) {
+                                    setValue([{
+                                        type: ELEMENT_DEFAULT,
+                                        children: [{ text: '' }],
+                                    }] as TElement[]);
+                                } else {
+                                    setValue(newValue);
+                                }
+                            }}
+                        >
+                            <FixedToolbar>
+                                <FixedToolbarButtons/>
+                            </FixedToolbar>
+                            <PlateContent
+                                placeholder={'내용을 입력하세요'}
+                                className={'Spendit-Content'}
+                            />
+                        </Plate>
+                        <div className={'Spendit-Editor-Footer'}/>
+                    </div>
+                </TooltipProvider>
+
+            </div>
+        </>
     );
 }

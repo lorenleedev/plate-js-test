@@ -56,6 +56,7 @@ export const TableBordersDropdownMenuContent = withRef<
       side="right"
       align="start"
       sideOffset={0}
+      style={{ zIndex: 1100 }}
       {...props}
     >
       <DropdownMenuCheckboxItem
